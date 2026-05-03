@@ -8,11 +8,11 @@ export default function Relatorio() {
   const params = useParams()
   const userId = params.userId
 
-  const [usuario, setUsuario] = useState(null)
-  const [divulgacoes, setDivulgacoes] = useState([])
+  const [usuario, setUsuario] = useState<any>(null)
+  const [divulgacoes, setDivulgacoes] = useState<any[]>([])
   const [filtroStatus, setFiltroStatus] = useState('')
   const [loading, setLoading] = useState(true)
-  const [atualizando, setAtualizando] = useState(null)
+  const [atualizando, setAtualizando] = useState<string | null>(null)
 
   useEffect(() => {
     if (!userId) return
@@ -24,13 +24,13 @@ export default function Relatorio() {
       const { data: userData } = await supabase.from('profiles').select('*').eq('id', userId).single()
       const { data: divs } = await supabase.from('divulgacoes').select('*').eq('user_id', userId).order('created_at', { ascending: false })
       setUsuario(userData)
-     const [divulgacoes, setDivulgacoes] = useState<any[]>([])
+      setDivulgacoes(divs || [])
       setLoading(false)
     }
     init()
   }, [userId])
 
-  const atualizarStatus = async (id, novoStatus) => {
+  const atualizarStatus = async (id: string, novoStatus: string) => {
     setAtualizando(id)
     const { error } = await supabase.from('divulgacoes').update({ status: novoStatus }).eq('id', id)
     if (!error) {
@@ -39,7 +39,7 @@ export default function Relatorio() {
     setAtualizando(null)
   }
 
-  const statusConfig = (status) => {
+  const statusConfig = (status: string) => {
     if (status === 'aprovado') return { bg: 'rgba(16,185,129,0.1)', color: '#10b981', dot: '#10b981', label: 'Aprovado' }
     if (status === 'reprovado') return { bg: 'rgba(239,68,68,0.1)', color: '#ef4444', dot: '#ef4444', label: 'Reprovado' }
     return { bg: 'rgba(245,158,11,0.1)', color: '#f59e0b', dot: '#f59e0b', label: 'Pendente' }
