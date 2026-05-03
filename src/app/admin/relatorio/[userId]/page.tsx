@@ -24,7 +24,7 @@ export default function Relatorio() {
       const { data: userData } = await supabase.from('profiles').select('*').eq('id', userId).single()
       const { data: divs } = await supabase.from('divulgacoes').select('*').eq('user_id', userId).order('created_at', { ascending: false })
       setUsuario(userData)
-      setDivulgacoes(divs || [])
+     const [divulgacoes, setDivulgacoes] = useState<any[]>([])
       setLoading(false)
     }
     init()
