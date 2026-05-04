@@ -41,3 +41,5 @@ yarn-error.log*
 next-env.d.ts
 NEXT_PUBLIC_SUPABASE_URL=cole_sua_project_url_aqui
 NEXT_PUBLIC_SUPABASE_ANON_KEY=cole_sua_anon_key_aqui
+
+.vercel
